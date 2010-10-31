@@ -18,7 +18,7 @@ public class LoginService {
 	public Employee login(Employee user, @Context HttpServletRequest request) {
 		if (user.getName().equalsIgnoreCase("user1")
 				&& user.getPassword().equals("password1")) {
-			user.setId(1001);
+			user.setId(1001l);
 			user.setEmail("fake@email.com");
 			// set user session to check if user login or not.
 			request.getSession().setAttribute(Constants.SESSION_USER, user);

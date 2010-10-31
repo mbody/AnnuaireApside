@@ -1,8 +1,6 @@
 package fr.apside.directory.resources;
 
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -28,15 +26,26 @@ public class EmployeeResource {
 	}
 
 	@POST
-	public Employee createEmployee(Employee employee) {
-		return getService().create(employee);
+	public Employee saveEmployee(Employee employee) {
+		if (employee != null && employee.getId() == null) {
+			employee = getService().create(employee);
+		} else {
+			getService().update(employee);
+		}
+		return employee;
 	}
 
 	@PUT
+	@Path("/{employeeId}")
 	public void updateEmployee(Employee employee) {
 		getService().update(employee);
 	}
-
+	@POST
+	@Path("/{employeeId}/update")
+	public void updateEmployee4Flex(Employee employee) {
+		updateEmployee(employee);
+	}
+	
 	@DELETE
 	@Path("/{employeeId}")
 	public void deleteEmployee(@PathParam("employeeId") String id) {
@@ -44,7 +53,12 @@ public class EmployeeResource {
 			getService().deleteById(new Long(id));
 		}
 	}
-
+	@POST
+	@Path("/{employeeId}/delete")
+	public void deleteEmployee4Flex(@PathParam("employeeId") String id) {
+		deleteEmployee(id);
+	}
+	
 	@GET
 	@Path("/{employeeId}")
 	public Employee getEmployee(@PathParam("employeeId") String id) {

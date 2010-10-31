@@ -20,14 +20,14 @@ public abstract class GenericEntity implements Serializable, IEntity {
 	/* (non-Javadoc)
 	 * @see fr.apside.directory.model.IEntity#getId()
 	 */
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.apside.directory.model.IEntity#setId(long)
 	 */
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 }

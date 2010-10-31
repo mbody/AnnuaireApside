@@ -2,8 +2,8 @@ package fr.apside.directory.model;
 
 public interface IEntity {
 
-	public abstract long getId();
+	public abstract Long getId();
 
-	public abstract void setId(long id);
+	public abstract void setId(Long id);
 
 }

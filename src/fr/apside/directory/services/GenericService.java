@@ -54,16 +54,34 @@ public class GenericService <T extends IEntity> {
 		public void update(final T entity) throws IllegalStateException,
 				IllegalArgumentException, TransactionRequiredException {
 			logger.log(Level.FINER, "Update entity: " + entity);
-			manager.merge(entity);
-			//manager.flush();
+			EntityTransaction transaction = manager.getTransaction();
+			try{
+				transaction.begin();
+				manager.merge(entity);
+				manager.flush();
+				transaction.commit();
+			}finally{
+				if(transaction.isActive()){
+					transaction.rollback();
+				}
+			}
 		}
 
 		public void delete(final T entity) throws IllegalStateException,
 				IllegalArgumentException, TransactionRequiredException,
 				PersistenceException {
 			logger.log(Level.FINER, "Delete entity: " + entity);
-			manager.remove(entity);
-			//manager.flush();
+			EntityTransaction transaction = manager.getTransaction();
+			try{
+				transaction.begin();
+				manager.remove(entity);
+				manager.flush();
+				transaction.commit();
+			}finally{
+				if(transaction.isActive()){
+					transaction.rollback();
+				}
+			}
 		}
 		public void deleteById(Serializable id) {
 			logger.log(Level.FINER, "Read entity by id: " + id);
